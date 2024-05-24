@@ -1,0 +1,207 @@
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Employee {
+    private int id;
+    private String name;
+    private int age;
+    private double salary;
+
+    public Employee(int id, String name,int age, double salary) {
+        this.id = id;
+        this.name = name;
+        this.age =age;
+        this.salary = salary;
+    }
+
+    // Getters and setters
+
+    public int getId() {
+        return id;
+    }
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age=age ;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this. name=name;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +", age="+age+
+                ", salary=" + salary +
+                '}';
+    }
+}
+
+class EmployeeManagementSystem {
+    private List<Employee> employees;
+
+    public EmployeeManagementSystem() {
+        this.employees = new ArrayList<>();
+    }
+
+    public void addEmployee(Employee employee) {
+        employees.add(employee);
+    }
+
+    public List<Employee> getAllEmployees() {
+        return employees;
+    }
+
+    public Employee findEmployeeById(int id) {
+        for (Employee employee : employees) {
+            if (employee.getId() == id) {
+                return employee;
+            }
+        }
+        return null;
+    }
+    public void updateEmployeeName(int id, String newName) {   //updateEmployeeName
+        Employee employee = findEmployeeById(id);
+        if (employee != null) {
+            employee.setName(newName);
+            System.out.println("Name updated successfully.");
+        } else {
+            System.out.println("Employee not found.");
+        }
+    }
+     public void updateEmployeeAge(int id, int newAge) {
+            Employee employee = findEmployeeById(id);
+            if (employee != null) {
+                employee.setAge(newAge);
+                System.out.println("Age updated successfully.");
+            } else {
+                System.out.println("Employee not found.");
+            }
+     }
+
+    public void updateEmployeeSalary(int id, double newSalary) {
+        Employee employee = findEmployeeById(id);
+        if (employee != null) {
+            employee.setSalary(newSalary);
+            System.out.println("Salary updated successfully.");
+        } else {
+            System.out.println("Employee not found.");
+        }
+    }
+}
+
+public class EmployeeManagementApp {
+    public static void main(String[] args) {
+        EmployeeManagementSystem employeeManagementSystem = new EmployeeManagementSystem();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("1. Add Employee");
+            System.out.println("2. View All Employees");
+            System.out.println("3. Update Employee ");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    // Add Employee
+                    System.out.print("Enter Employee ID: ");
+                    int id = scanner.nextInt();
+                    System.out.print("Enter Employee Name: ");
+                    scanner.nextLine(); // Consume newline
+                    String name = scanner.nextLine();
+                    System.out.print("Enter Employee Age: ");
+                    int age = scanner.nextInt();
+                    System.out.print("Enter Employee Salary: ");
+                    double salary = scanner.nextDouble();
+
+                    Employee newEmployee = new Employee(id, name, age, salary);
+                    employeeManagementSystem.addEmployee(newEmployee);
+                    System.out.println("Employee added successfully.");
+                    break;
+
+                case 2:
+                    // View All Employees
+                    List<Employee> allEmployees = employeeManagementSystem.getAllEmployees();
+                    for (Employee employee : allEmployees) {
+                        System.out.println(employee);
+                    }
+                    break;
+
+                case 3:
+                    // Update Employee Salary
+                    System.out.print("Enter Employee ID to update : ");
+                    int employeeId = scanner.nextInt();
+                   // System.out.println(alle
+                    //		mployee(employeeId));
+                    System.out.println("1. For Employee Name");
+                    System.out.println("2. For Employee Age");
+                    System.out.println("3. For Employee Salary");
+                    
+                    System.out.print("Enter your choice: ");
+                    int choice1 = scanner.nextInt();
+                    switch (choice1) {
+                    case 1:
+                        // Add Employee
+                        System.out.print("Enter Employee Name: ");
+                        scanner.nextLine();
+                        String newName = scanner.nextLine();
+                        
+                        employeeManagementSystem.updateEmployeeName(employeeId, newName);
+                        //System.out.println("Employee added successfully.");
+                        break;
+                       
+
+                    case 2:
+                        // View All Employees
+                    	System.out.print("Enter Employee Age: ");
+                        int newAge=scanner.nextInt();
+                        
+                        employeeManagementSystem.updateEmployeeAge(employeeId, newAge);
+                        //System.out.println("Employee added successfully.");
+                        break;
+                        
+
+                    case 3:
+                    	System.out.print("Enter Employee Salary: ");
+                       
+                          double newSalary = scanner.nextDouble();
+                          employeeManagementSystem.updateEmployeeSalary(employeeId, newSalary);
+                          //System.out.println("Employee added successfully.");
+                          break;
+                   
+                    
+                    default:
+                        System.out.println("Invalid choice. Please enter a valid option.");
+                    }
+                    break;
+            
+                case 4:
+                    // Exit
+                    System.out.println("Exiting Employee Management System. Goodbye!");
+                    System.exit(0);
+
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+        }
+    }
+}
